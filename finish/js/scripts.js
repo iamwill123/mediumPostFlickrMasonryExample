@@ -1,4 +1,8 @@
-// I hope we all know whats going on in here...
+// Navigate to:
+   // https://www.flickr.com/services/developer
+// then: 
+   // https://www.flickr.com/services/api/
+// or use this link: https://www.flickr.com/services/apps/create/
 
 "use strict";
 
@@ -12,14 +16,43 @@
 
   // AJAX call, ring ring hello helloooo ??
   function getJSONData() {
+    var API_KEY ="8f29ca9d04e2badc2e07dc346663e0f9";
+    var photoset_ID = "72157685222990161";
+    
+    var flickrURL = "https://api.flickr.com/services/rest/" +
+                    "?method=flickr.photosets.getPhotos" +
+                    "&api_key=" + API_KEY +
+                    "&photoset_id=" + photoset_ID +
+                    "&privacy_filter=1" +  // 1 signifies all public photos.
+                    "&format=json&nojsoncallback=1";
+                    
   	$.getJSON( flickrURL, successFn );
   }
 
   // **picks up** ah yes hello, I have your request, here you go!
   function successFn(result) {
   	console.log(result);
-  	console.log("flickr images loaded, hurray! do a backflip");
-
+  	console.log("flickr request is a success, do a backflip");
+    
+    var photosetTitle = result.photoset.title;
+		$("#photo-grid h1").html(photosetTitle);
+		
+    var $gridMasterClass = $("<div class='grid' />").append("<div class='grid-sizer' />");
+    $("#photo-grid").append($gridMasterClass);
+  
+    $.each(result.photoset.photo, function(i, photo) {
+      var originalSizeURL = "https://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg";
+  
+      $("<img>").attr("src", originalSizeURL)
+        .appendTo(".grid")
+        .wrap("<div class='grid-item' data-featherlight-gallery data-featherlight-filter='a' />")
+        .wrap('<a href="' + originalSizeURL + '" data-featherlight="'+ originalSizeURL +'" class="gallery"></a>');
+        
+      // if (i === 12) {
+      //   return false;
+      // }
+    });
+    
   	initMasonry();
   }
 
