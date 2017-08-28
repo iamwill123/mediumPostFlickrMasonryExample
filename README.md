@@ -10,7 +10,7 @@ And happy coding!
 
 ## Medium Post Link
 
-Visit https://medium.com/
+Visit https://medium.com/@iamwill.us/create-a-responsive-photo-grid-web-app-11ed355bc6b9
 
 ## Flickr API setup
 
