@@ -1,4 +1,4 @@
-# Hi there! Welcome this tutorial.
+# Hi there! Welcome
 
 To get you started, I included a start and finish file.
 
